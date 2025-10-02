@@ -123,7 +123,7 @@ The library can be installed using Swift Package Manager.
     ```
 - If a class or a struct has one or more initialisers, the macro will use the first/top one
 - For structs without an initialiser, the macro makes a best guess to decide how the implicit memberwise initializer could look like. This best guess might fail for declarations that have not been considered during implementation of the macro
-- As of Swift 6.1.0 and Xcode 16.3 (14.05.2025) it is not possible to use the generated builders inside the SwiftUI `#Preview` closure
+- As of Swift 6.2.0 and Xcode 26.0 (02.10.2025) it is not possible to use the generated builders inside the SwiftUI `#Preview` closure
 
 ## Builder default values
 The list of default values is limited to the values specified in the below table. 
