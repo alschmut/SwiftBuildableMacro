@@ -5,6 +5,7 @@
 //  Created by Alexander Schmutz on 03.07.23.
 //
 
+import Foundation
 import SwiftSyntax
 
 func extractMembersFrom(_ memberBlockItemList: MemberBlockItemListSyntax) -> [StructMember] {

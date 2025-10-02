@@ -65,7 +65,7 @@ private func closureCodeBlock(
     }
 }
 
-private var mapping: [String: ExprSyntax] = [
+private let mapping: [String: ExprSyntax] = [
     "String": "\"\"",
     "Int": "0",
     "Int8": "0",
