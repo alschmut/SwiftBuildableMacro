@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "Buildable", targets: ["Buildable"])
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax.git", .upToNextMajor(from: "602.0.0")),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", .upToNextMajor(from: "602.0.0")),
     ],
     targets: [
         .macro(
