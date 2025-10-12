@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  
+//  String+Error.swift
+//
 //
 //  Created by Alexander Schmutz on 03.07.23.
 //
 
-extension String: Error {}
+extension String: @retroactive Error {}

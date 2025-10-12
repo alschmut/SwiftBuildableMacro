@@ -16,7 +16,9 @@ func makeFunctionDeclWithValue(
             ExprSyntax(
                 FunctionCallExprSyntax(
                     calledExpression: DeclReferenceExprSyntax(baseName: enumMember.identifier.trimmed),
-                    arguments: LabeledExprListSyntax([])
+                    leftParen: nil,
+                    arguments: LabeledExprListSyntax([]),
+                    rightParen: nil
                 )
             )
         )
