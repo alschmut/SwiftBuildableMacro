@@ -7,8 +7,12 @@
 
 import SwiftSyntax
 
-func makeVariableDecl(structMember: StructMember) -> VariableDeclSyntax {
+func makeVariableDecl(
+    structMember: StructMember,
+    accessLevel: AccessLevel
+) -> VariableDeclSyntax {
     VariableDeclSyntax(
+        modifiers: makeInnerDeclModifierList(for: accessLevel),
         bindingSpecifier: .keyword(.var),
         bindings: PatternBindingListSyntax {
             PatternBindingSyntax(

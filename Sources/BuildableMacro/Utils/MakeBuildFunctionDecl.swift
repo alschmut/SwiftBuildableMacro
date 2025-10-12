@@ -7,13 +7,21 @@
 
 import SwiftSyntax
 
-func makeBuildFunctionDecl(returningType: TypeSyntax, body: () -> ReturnStmtSyntax) -> FunctionDeclSyntax {
+func makeBuildFunctionDecl(
+    returningType: TypeSyntax,
+    accessLevel: AccessLevel,
+    body: () -> ReturnStmtSyntax
+) -> FunctionDeclSyntax {
     let buildFunctionSignature = FunctionSignatureSyntax(
         parameterClause: FunctionParameterClauseSyntax(parameters: FunctionParameterListSyntax([])),
         returnClause: ReturnClauseSyntax(type: returningType)
     )
 
-    return FunctionDeclSyntax(name: .identifier("build"), signature: buildFunctionSignature) {
+    return FunctionDeclSyntax(
+        modifiers: makeInnerDeclModifierList(for: accessLevel),
+        name: .identifier("build"),
+        signature: buildFunctionSignature
+    ) {
         CodeBlockItemListSyntax {
             CodeBlockItemSyntax(
                 item: CodeBlockItemListSyntax.Element.Item.stmt(StmtSyntax(body()))

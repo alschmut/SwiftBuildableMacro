@@ -10,19 +10,21 @@ import SwiftSyntax
 func makeStructBuilder(
     structName: TokenSyntax,
     inheritanceClause: InheritanceClauseSyntax?,
-    structMembers: [StructMember]
+    structMembers: [StructMember],
+    accessLevel: AccessLevel
 ) -> StructDeclSyntax {
     StructDeclSyntax(
+        modifiers: makeOuterDeclModifierList(for: accessLevel),
         name: getStructBuilderName(from: structName),
         inheritanceClause: getSendableInheritanceClause(original: inheritanceClause)
     ) {
         MemberBlockItemListSyntax {
             for structMember in structMembers {
-                MemberBlockItemSyntax(decl: makeVariableDecl(structMember: structMember))
+                MemberBlockItemSyntax(decl: makeVariableDecl(structMember: structMember, accessLevel: accessLevel))
             }
             MemberBlockItemSyntax(
                 leadingTrivia: .newlines(2),
-                decl: makeFunctionDecl(name: structName, structMembers: structMembers)
+                decl: makeFunctionDecl(name: structName, structMembers: structMembers, accessLevel: accessLevel)
             )
         }
     }

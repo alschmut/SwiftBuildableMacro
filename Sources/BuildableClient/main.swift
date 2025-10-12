@@ -56,7 +56,41 @@ final class MyClass: Sendable {
 }
 
 @Buildable
-struct MyStruct {
+package struct MyStruct {
     let m1: String
     let fix: String = ""
 }
+
+@Buildable
+struct Person: Sendable {
+    let name: String
+    let age: Int
+    let address: Address
+    let favouriteSeason: Season
+}
+
+@Buildable
+public enum Season: Sendable {
+    case winter
+    case spring
+    case summer
+    case autumn
+}
+
+@Buildable(accessLevel: .internal)
+package class AppState {
+    let persons: [Person]
+
+    init(
+        persons: [Person]
+    ) {
+        self.persons = persons
+    }
+}
+
+@Buildable
+struct Address {}
+
+let anyPerson = PersonBuilder().build()
+let max = PersonBuilder(name: "Max", favouriteSeason: .summer).build()
+let appState = AppStateBuilder(persons: [max]).build()

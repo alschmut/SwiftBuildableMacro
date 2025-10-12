@@ -12,21 +12,21 @@
 ///     }
 ///
 ///     @Buildable
-///     enum Season {
-///         case .winter
-///         case .spring
-///         case .summer
-///         case .autumn
+///     public enum Season {
+///         case winter
+///         case spring
+///         case summer
+///         case autumn
 ///     }
 ///
-///     @Buildable
-///     class AppState {
+///     @Buildable(accessLevel: .internal)
+///     package class AppState {
 ///         let persons: [Person]
 ///
 ///         init(
 ///             persons: [Person]
 ///         ) {
-///             self.person = person
+///             self.persons = persons
 ///         }
 ///     }
 ///
@@ -36,7 +36,7 @@
 ///         var name: String = ""
 ///         var age: Int = 0
 ///         var address: Address = AddressBuilder().build()
-///         var favouriteSeason: SeasonBuilder = SeasonBuilder().build()
+///         var favouriteSeason: Season = SeasonBuilder().build()
 ///
 ///         func build() -> Person {
 ///             return Person(
@@ -48,10 +48,10 @@
 ///         }
 ///     }
 ///
-///     struct SeasonBuilder {
-///         var value: Season = .spring
+///     public struct SeasonBuilder {
+///         public var value: Season = .winter
 ///
-///         func build() -> Season {
+///         public func build() -> Season {
 ///             return value
 ///         }
 ///     }
@@ -65,8 +65,11 @@
 ///             )
 ///         }
 ///     }
+///
+/// - Parameters:
+///   - accessLevel: The access level (e.x. `.private`, `.public`, etc.), which the generated Builder will have. If you set the value to nil, the generated Builder has the same access level as the original struct/class/enum to which the macro was applied to. The default value of this parameter is nil.
 @attached(peer, names: suffixed(Builder))
-public macro Buildable() = #externalMacro(
+public macro Buildable(accessLevel: AccessLevel? = nil) = #externalMacro(
     module: "BuildableMacro",
     type: "BuildableMacroType"
 )

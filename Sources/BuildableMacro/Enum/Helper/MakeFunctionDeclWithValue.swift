@@ -7,8 +7,11 @@
 
 import SwiftSyntax
 
-func makeFunctionDeclWithValue(enumMember: EnumMember) -> FunctionDeclSyntax {
-    makeBuildFunctionDecl(returningType: enumMember.type) {
+func makeFunctionDeclWithValue(
+    enumMember: EnumMember,
+    accessLevel: AccessLevel
+) -> FunctionDeclSyntax {
+    makeBuildFunctionDecl(returningType: enumMember.type, accessLevel: accessLevel) {
         ReturnStmtSyntax(expression:
             ExprSyntax(
                 FunctionCallExprSyntax(
