@@ -7,8 +7,12 @@
 
 import SwiftSyntax
 
-func makeVariableDeclWithValue(enumMember: EnumMember) -> VariableDeclSyntax {
+func makeVariableDeclWithValue(
+    enumMember: EnumMember,
+    accessLevel: AccessLevel
+) -> VariableDeclSyntax {
     VariableDeclSyntax(
+        modifiers: makeInnerDeclModifierList(for: accessLevel),
         bindingSpecifier: .keyword(.var),
         bindings: PatternBindingListSyntax {
             PatternBindingSyntax(

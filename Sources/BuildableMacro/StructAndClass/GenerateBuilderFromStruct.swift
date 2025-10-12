@@ -7,11 +7,12 @@
 
 import SwiftSyntax
 
-func generateBuilderFromStruct(structDecl: StructDeclSyntax) -> StructDeclSyntax {
-    makeStructBuilder(
+func generateBuilderFromStruct(structDecl: StructDeclSyntax, accessLevel: AccessLevel?) -> StructDeclSyntax {
+    return makeStructBuilder(
         structName: structDecl.name,
         inheritanceClause: structDecl.inheritanceClause,
-        structMembers: getStructMembers(structDecl: structDecl)
+        structMembers: getStructMembers(structDecl: structDecl),
+        accessLevel: accessLevel ?? getAccessLevel(from: structDecl.modifiers)
     )
 }
 

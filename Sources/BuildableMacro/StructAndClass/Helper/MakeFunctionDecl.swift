@@ -7,8 +7,15 @@
 
 import SwiftSyntax
 
-func makeFunctionDecl(name: TokenSyntax, structMembers: [StructMember]) -> FunctionDeclSyntax {
-    makeBuildFunctionDecl(returningType: TypeSyntax(stringLiteral: name.text)) {
+func makeFunctionDecl(
+    name: TokenSyntax,
+    structMembers: [StructMember],
+    accessLevel: AccessLevel
+) -> FunctionDeclSyntax {
+    makeBuildFunctionDecl(
+        returningType: TypeSyntax(stringLiteral: name.text),
+        accessLevel: accessLevel
+    ) {
         ReturnStmtSyntax(expression:
             ExprSyntax(
                 makeFunctionCallExpr(name: name, structMembers: structMembers)

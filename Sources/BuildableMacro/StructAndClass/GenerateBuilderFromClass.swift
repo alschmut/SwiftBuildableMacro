@@ -7,13 +7,14 @@
 
 import SwiftSyntax
 
-func generateBuilderFromClass(classDecl: ClassDeclSyntax) throws -> StructDeclSyntax {
+func generateBuilderFromClass(classDecl: ClassDeclSyntax, accessLevel: AccessLevel?) throws -> StructDeclSyntax {
     guard let initialiserDecl = getFirstInitialiser(from: classDecl.memberBlock) else {
         throw "Missing initialiser"
     }
     return makeStructBuilder(
         structName: classDecl.name,
         inheritanceClause: classDecl.inheritanceClause,
-        structMembers: extractInitializerMembers(from: initialiserDecl)
+        structMembers: extractInitializerMembers(from: initialiserDecl),
+        accessLevel: accessLevel ?? getAccessLevel(from: classDecl.modifiers)
     )
 }

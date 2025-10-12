@@ -30,36 +30,29 @@ let person = PersonBuilder(age: 42).build()
 import Buildable
 
 @Buildable
-struct Person: Sendable {
+struct Person {
     let name: String
     let age: Int
     let address: Address
-    let hobby: String?
     let favouriteSeason: Season
-    
-    var likesReading: Bool {
-        hobby == "Reading" 
-    }
-    
-    static let minimumAge = 21
 }
 
 @Buildable
-enum Season {
+public enum Season {
     case winter
     case spring
     case summer
     case autumn
 }
 
-@Buildable
-class AppState {
+@Buildable(accessLevel: .internal)
+package class AppState {
     let persons: [Person]
 
     init(
         persons: [Person]
     ) {
-        self.person = person
+        self.persons = persons
     }
 }
 
@@ -69,28 +62,26 @@ let appState = AppStateBuilder(persons: [max]).build()
 ```
 Expanded macro
 ```swift
-struct PersonBuilder : Sendable {
+struct PersonBuilder {
     var name: String = ""
     var age: Int = 0
     var address: Address = AddressBuilder().build()
-    var hobby: String?
-    var favouriteSeason: SeasonBuilder = SeasonBuilder().build()
+    var favouriteSeason: Season = SeasonBuilder().build()
 
     func build() -> Person {
         return Person(
             name: name,
             age: age,
             address: address,
-            hobby: hobby,
             favouriteSeason: favouriteSeason
         )
     }
 }
 
-struct SeasonBuilder {
-    var value: Season = .spring
-    
-    func build() -> Season {
+public struct SeasonBuilder {
+    public var value: Season = .winter
+
+    public func build() -> Season {
         return value
     }
 }
