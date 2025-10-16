@@ -10,9 +10,36 @@ import SwiftSyntaxMacrosTestSupport
 
 class BuildableStructAccesLevelTests: XCTestCase {
     
-    func test_should_apply_access_levels() {
+    func test_should_apply_fileprivate_access_levels() {
+        assertMacroExpansion(
+            """
+            @Buildable
+            fileprivate struct Person {
+                let name: String
+            }
+            """,
+            expandedSource: """
+
+            fileprivate struct Person {
+                let name: String
+            }
+
+            fileprivate struct PersonBuilder {
+                fileprivate var name: String = ""
+
+                fileprivate func build() -> Person {
+                    return Person(
+                        name: name
+                    )
+                }
+            }
+            """,
+            macros: testMacros
+        )
+    }
+    
+    func test_should_apply_public_and_package_access_levels_with_init() {
         let accessLevels = [
-            "fileprivate",
             "package",
             "public"
         ]
@@ -32,6 +59,12 @@ class BuildableStructAccesLevelTests: XCTestCase {
 
                 \(accessLevel) struct PersonBuilder {
                     \(accessLevel) var name: String = ""
+                
+                    \(accessLevel) init(
+                        name: String = ""
+                    ) {
+                        self.name = name
+                    }
 
                     \(accessLevel) func build() -> Person {
                         return Person(
@@ -117,6 +150,12 @@ class BuildableStructAccesLevelTests: XCTestCase {
 
             package struct PersonBuilder {
                 package var name: String = ""
+
+                package init(
+                    name: String = ""
+                ) {
+                    self.name = name
+                }
 
                 package func build() -> Person {
                     return Person(

@@ -11,4 +11,14 @@ enum AccessLevel: String, CaseIterable {
     case `internal`
     case `package`
     case `public`
+    
+    var needsExplicitInit: Bool {
+        switch self {
+        case .private: false
+        case .fileprivate: false
+        case .internal: false
+        case .package: true
+        case .public: true
+        }
+    }
 }
