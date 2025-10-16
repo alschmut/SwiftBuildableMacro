@@ -25,6 +25,14 @@ func generateBuilderFromEnum(enumDecl: EnumDeclSyntax, accessLevel: AccessLevel?
             MemberBlockItemSyntax(
                 decl: makeVariableDeclWithValue(enumMember: enumMember, accessLevel: accessLevel)
             )
+            
+            if accessLevel.needsExplicitInit {
+                MemberBlockItemSyntax(
+                    leadingTrivia: .newlines(2),
+                    decl: makeExplicitInit(parameters: [enumMember.asInitParameter], accessLevel: accessLevel)
+                )
+            }
+            
             MemberBlockItemSyntax(
                 leadingTrivia: .newlines(2),
                 decl: makeFunctionDeclWithValue(enumMember: enumMember, accessLevel: accessLevel)

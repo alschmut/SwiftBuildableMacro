@@ -39,7 +39,7 @@ struct MyObject {
 }
 
 @Buildable
-enum MyEnum {
+public enum MyEnum {
     case `none`
     case myCase
 }

@@ -10,9 +10,35 @@ import SwiftSyntaxMacrosTestSupport
 
 class BuildableEnumAccessLevelTests: XCTestCase {
     
-    func test_should_apply_access_levels() {
+    func test_should_apply_fileprivate_access_level() {
+        assertMacroExpansion(
+            """
+            @Buildable
+            fileprivate enum MyEnum {
+                case myCase
+            }
+            """,
+            expandedSource: """
+            
+            fileprivate enum MyEnum {
+                case myCase
+            }
+            
+            fileprivate struct MyEnumBuilder {
+                fileprivate var value: MyEnum = .myCase
+            
+                fileprivate func build() -> MyEnum {
+                    return value
+                }
+            }
+            
+            """,
+            macros: testMacros
+        )
+    }
+    
+    func test_should_apply_public_and_package_access_levels_with_init() {
         let accessLevels = [
-            "fileprivate",
             "package",
             "public"
         ]
@@ -32,6 +58,12 @@ class BuildableEnumAccessLevelTests: XCTestCase {
                 
                 \(accessLevel) struct MyEnumBuilder {
                     \(accessLevel) var value: MyEnum = .myCase
+                
+                    \(accessLevel) init(
+                        value: MyEnum = .myCase
+                    ) {
+                        self.value = value
+                    }
                 
                     \(accessLevel) func build() -> MyEnum {
                         return value

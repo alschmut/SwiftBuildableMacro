@@ -12,4 +12,8 @@ struct StructMember: Identifiable {
     let id = UUID()
     let identifier: TokenSyntax
     let type: TypeSyntax
+    
+    var asInitParameter: InitParameter {
+        InitParameter(identifier: identifier, type: type, value: nil)
+    }
 }
