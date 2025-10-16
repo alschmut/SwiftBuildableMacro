@@ -10,9 +10,49 @@ import SwiftSyntaxMacrosTestSupport
 
 class BuildableClassAccessLevelTests: XCTestCase {
     
-    func test_should_apply_access_levels() {
+    func test_should_apply_fileprivate_access_level() {
+        assertMacroExpansion(
+            """
+            @Buildable
+            fileprivate class MyClass {
+                let m1: String
+
+                fileprivate init(
+                    m1: String = ""
+                ) {
+                    self.m1 = m1
+                }
+            }
+            """,
+            expandedSource: """
+
+            fileprivate class MyClass {
+                let m1: String
+
+                fileprivate init(
+                    m1: String = ""
+                ) {
+                    self.m1 = m1
+                }
+            }
+
+            fileprivate struct MyClassBuilder {
+                fileprivate var m1: String = ""
+
+                fileprivate func build() -> MyClass {
+                    return MyClass(
+                        m1: m1
+                    )
+                }
+            }
+
+            """,
+            macros: testMacros
+        )
+    }
+    
+    func test_should_apply_public_and_package_access_levels_with_init() {
         let accessLevels = [
-            "fileprivate",
             "package",
             "public"
         ]
@@ -44,6 +84,12 @@ class BuildableClassAccessLevelTests: XCTestCase {
 
                 \(accessLevel) struct MyClassBuilder {
                     \(accessLevel) var m1: String = ""
+
+                    \(accessLevel) init(
+                        m1: String = ""
+                    ) {
+                        self.m1 = m1
+                    }
 
                     \(accessLevel) func build() -> MyClass {
                         return MyClass(
