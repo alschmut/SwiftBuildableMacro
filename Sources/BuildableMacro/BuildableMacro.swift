@@ -18,7 +18,7 @@ public struct BuildableMacroType: PeerMacro {
         
         let accessLevel = extractAccessLevelMacroParameter(from: node)
         if let structDecl = declaration.as(StructDeclSyntax.self) {
-            let structBuilder = generateBuilderFromStruct(structDecl: structDecl, accessLevel: accessLevel)
+            let structBuilder = try generateBuilderFromStruct(structDecl: structDecl, accessLevel: accessLevel)
             return [DeclSyntax(structBuilder)]
         }
 

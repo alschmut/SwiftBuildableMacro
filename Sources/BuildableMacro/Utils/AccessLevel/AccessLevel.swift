@@ -12,6 +12,16 @@ enum AccessLevel: String, CaseIterable {
     case `package`
     case `public`
     
+    var orderIndex: Int {
+        switch self {
+        case .private: 0
+        case .fileprivate: 1
+        case .internal: 2
+        case .package: 3
+        case .public: 4
+        }
+    }
+    
     var needsExplicitInit: Bool {
         switch self {
         case .private: false
@@ -20,5 +30,11 @@ enum AccessLevel: String, CaseIterable {
         case .package: true
         case .public: true
         }
+    }
+}
+
+extension AccessLevel: Comparable {
+    static func < (lhs: AccessLevel, rhs: AccessLevel) -> Bool {
+        lhs.orderIndex < rhs.orderIndex
     }
 }
