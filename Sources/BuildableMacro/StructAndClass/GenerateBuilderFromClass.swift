@@ -11,10 +11,12 @@ func generateBuilderFromClass(classDecl: ClassDeclSyntax, accessLevel: AccessLev
     guard let initialiserDecl = getFirstInitialiser(from: classDecl.memberBlock) else {
         throw "Missing initialiser"
     }
+    let givenAccessLevel = getAccessLevel(from: classDecl.modifiers)
+    let validAccessLevel = try getValidAccessLevels(givenAccessLevel: givenAccessLevel, desiredAccessLevel: accessLevel)
     return makeStructBuilder(
         structName: classDecl.name,
         inheritanceClause: classDecl.inheritanceClause,
         structMembers: extractInitializerMembers(from: initialiserDecl),
-        accessLevel: accessLevel ?? getAccessLevel(from: classDecl.modifiers)
+        accessLevel: validAccessLevel
     )
 }

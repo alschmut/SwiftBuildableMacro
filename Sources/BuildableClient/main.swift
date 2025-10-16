@@ -62,7 +62,7 @@ package struct MyStruct {
 }
 
 @Buildable
-struct Person: Sendable {
+public struct Person: Sendable {
     let name: String
     let age: Int
     let address: Address
@@ -77,7 +77,7 @@ public enum Season: Sendable {
     case autumn
 }
 
-@Buildable(accessLevel: .internal)
+@Buildable(accessLevel: .private)
 package class AppState {
     let persons: [Person]
 
@@ -89,7 +89,7 @@ package class AppState {
 }
 
 @Buildable
-struct Address {}
+public struct Address: Sendable {}
 
 let anyPerson = PersonBuilder().build()
 let max = PersonBuilder(name: "Max", favouriteSeason: .summer).build()
