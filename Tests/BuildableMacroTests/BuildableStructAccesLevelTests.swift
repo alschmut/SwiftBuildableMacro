@@ -140,26 +140,32 @@ class BuildableStructAccesLevelTests: XCTestCase {
             @Buildable(accessLevel: .package)
             public struct Person {
                 let name: String
+                let age: Int
             }
             """,
             expandedSource: """
 
             public struct Person {
                 let name: String
+                let age: Int
             }
 
             package struct PersonBuilder {
                 package var name: String = ""
+                package var age: Int = 0
 
                 package init(
-                    name: String = ""
+                    name: String = "",
+                    age: Int = 0
                 ) {
                     self.name = name
+                    self.age = age
                 }
 
                 package func build() -> Person {
                     return Person(
-                        name: name
+                        name: name,
+                        age: age
                     )
                 }
             }

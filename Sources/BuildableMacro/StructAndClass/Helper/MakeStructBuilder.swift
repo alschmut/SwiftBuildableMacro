@@ -38,7 +38,7 @@ func makeStructBuilder(
                                             firstName: structMember.identifier,
                                             type: structMember.type,
                                             defaultValue: InitializerClauseSyntax(value: getDefaultValueForType(structMember.type) ?? "nil"),
-                                            trailingTrivia: .newline
+                                            trailingTrivia: structMember.id == structMembers.last?.id ? .newline : nil
                                         )
                                     }
                                 }
