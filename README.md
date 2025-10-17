@@ -81,6 +81,12 @@ struct PersonBuilder {
 public struct SeasonBuilder {
     public var value: Season = .winter
 
+    public init(
+        value: Season = .winter
+    ) {
+        self.value = value
+    }
+    
     public func build() -> Season {
         return value
     }
@@ -100,9 +106,16 @@ struct AppStateBuilder {
 ## Installation
 The library can be installed using Swift Package Manager.
 
+
+## Features
+- The macro can be applied to `struct`, `enum` and `class` definitions to generate a builder
+- For `struct` definitions without explicit initialisers the macro makes a best guess to derive the memberwise initialiser. Please create a GitHub issue, in case you find any bugs :)
+- For every `init`-parameter a type dependent default value is set (see the below table). For unknown/custom types, the macro will expect another builder to be defined somewhere else
+    - E.x. a known type: `var number: Int = 0`
+    - E.x. an unknown type: `var value: MyValue = MyValueBuilder().build()`
+- By default the top level access level (e.x. `public`, `private`, etc.) of `struct`, `enum` and `class` definition is also appled to the builder. If you need the builder to have a lower access level you can define it via `@Buildable(accessLevel: .internal)`
+
 ## Limitations
-- The macro only works on `struct`, `enum` and `class` definitions
-- The list of default values is limited to the values specified in the below table. All other types will require another builder to be defined
 - If a builder for a specific declaration can not be generated, you can always choose to create it yourself by following the below builder naming pattern:
     ```swift
     struct <MyType>Builder {
@@ -113,7 +126,6 @@ The library can be installed using Swift Package Manager.
     }
     ```
 - If a class or a struct has one or more initialisers, the macro will use the first/top one
-- For structs without an initialiser, the macro makes a best guess to decide how the implicit memberwise initializer could look like. This best guess might fail for declarations that have not been considered during implementation of the macro
 - As of Swift 6.2.0 and Xcode 26.0 (02.10.2025) it is not possible to use the generated builders inside the SwiftUI `#Preview` closure
 
 ## Builder default values
@@ -158,4 +170,4 @@ assuming that the `UnknownTypeBuilder` was created somewhere else.
 
 ## Roadmap
 
-The `@Buildable` macro was created out of personal interest to reduce repetitive code in my own projects. I might continue developing the macro depending use cases I stumble across, though, I do not guarantee to keep the project up to date myself. Please create GitHub issues for any feature or bugfix you would like to see within the macro. Contributions or fixes from the Community are most welcome.
+The `@Buildable` macro was created out of personal interest to reduce repetitive code in my own projects. I might continue developing the macro depending on use cases I stumble across, though, I do not guarantee to keep the project up to date myself. Please create GitHub issues for any feature or bugfix you would like to see within the macro. Contributions or fixes from the Community are most welcome.

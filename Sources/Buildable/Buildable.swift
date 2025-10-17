@@ -51,6 +51,12 @@
 ///     public struct SeasonBuilder {
 ///         public var value: Season = .winter
 ///
+///         public init(
+///             value: Season = .winter
+///         ) {
+///             self.value = value
+///         }
+///
 ///         public func build() -> Season {
 ///             return value
 ///         }
