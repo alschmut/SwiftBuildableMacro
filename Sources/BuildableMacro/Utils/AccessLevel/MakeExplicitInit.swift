@@ -18,7 +18,7 @@ func makeExplicitInit(parameters: [InitParameter], accessLevel: AccessLevel) -> 
                         FunctionParameterSyntax(
                             leadingTrivia: .newline,
                             firstName: parameter.identifier,
-                            type: parameter.type,
+                            type: parameter.typeForExplicitInit,
                             defaultValue: InitializerClauseSyntax(value: getDefaultValue(from: parameter)),
                             trailingTrivia: parameter.id == parameters.last?.id ? .newline : nil
                         )

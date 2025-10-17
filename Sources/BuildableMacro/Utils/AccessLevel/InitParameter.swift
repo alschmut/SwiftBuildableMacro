@@ -13,4 +13,17 @@ struct InitParameter: Identifiable {
     let identifier: TokenSyntax
     let type: TypeSyntax
     let value: TokenSyntax?
+    
+    var typeForExplicitInit: any TypeSyntaxProtocol {
+        if type.as(FunctionTypeSyntax.self) != nil {
+            return AttributedTypeSyntax(
+                specifiers: TypeSpecifierListSyntax {
+                    SimpleTypeSpecifierSyntax(specifier: .identifier("@escaping"))
+                },
+                baseType: type
+            )
+        } else {
+            return type
+        }
+    }
 }
