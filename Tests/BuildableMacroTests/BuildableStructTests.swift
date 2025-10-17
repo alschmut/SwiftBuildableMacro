@@ -621,4 +621,63 @@ class BuildableStructTests: XCTestCase {
             macros: testMacros
         )
     }
+    
+    func test_should_add_escaping_keyword_for_closure_in_public_init() {
+        assertMacroExpansion(
+            """
+            @Buildable
+            public struct MyObject {
+                public let m1: () -> Void
+                public let m2: (String) -> Int
+                public let m3: (() -> Void)?
+                public let m4: (() -> Void)!
+            }
+            """,
+            expandedSource: """
+
+            public struct MyObject {
+                public let m1: () -> Void
+                public let m2: (String) -> Int
+                public let m3: (() -> Void)?
+                public let m4: (() -> Void)!
+            }
+
+            public struct MyObjectBuilder {
+                public var m1: () -> Void = {
+                }
+                public var m2: (String) -> Int = { _ in
+                    return 0
+                }
+                public var m3: (() -> Void)?
+                public var m4: (() -> Void)!
+            
+                public init(
+                    m1: @escaping () -> Void = {
+                    },
+                    m2: @escaping (String) -> Int = { _ in
+                        return 0
+                    },
+                    m3: (() -> Void)? = nil,
+                    m4: (() -> Void)! = nil
+                ) {
+                    self.m1 = m1
+                    self.m2 = m2
+                    self.m3 = m3
+                    self.m4 = m4
+                }
+
+                public func build() -> MyObject {
+                    return MyObject(
+                        m1: m1,
+                        m2: m2,
+                        m3: m3,
+                        m4: m4
+                    )
+                }
+            }
+
+            """,
+            macros: testMacros
+        )
+    }
 }

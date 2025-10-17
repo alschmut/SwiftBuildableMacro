@@ -2,7 +2,7 @@ import Buildable
 import Foundation
 
 @Buildable
-struct MyObject {
+public struct MyObject {
     let m01: String
     let m02: Int
     let m03: Int8
@@ -32,9 +32,12 @@ struct MyObject {
     let m27: [String: String]
     var m28: String
     let m29: () -> Void
-    let m30: (String) -> Void
-    let m31: (String, Int) -> Void
-    let m32: (String, Int) -> String
+    let m30: (() -> Void)?
+    let m31: (() -> Void)!
+    let m32: (String) -> Void
+    let m33: ((String) -> Void)?
+    let m34: (String, Int) -> Void
+    let m35: (String, Int) -> String
     var myEnum: MyEnum
 }
 
