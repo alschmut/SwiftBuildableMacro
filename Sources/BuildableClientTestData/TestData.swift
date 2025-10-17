@@ -1,6 +1,5 @@
 import Buildable
 import Foundation
-import BuildableClientTestData
 
 @Buildable
 public struct MyObject {
@@ -42,61 +41,11 @@ public struct MyObject {
     var myEnum: MyEnum
 }
 
+@MainActor
+let abc = MyObjectBuilder().build()
+
 @Buildable
 public enum MyEnum {
     case `none`
     case myCase
 }
-
-@Buildable
-final class MyClass: Sendable {
-    let m1: String
-
-    init(
-        m1: String
-    ) {
-        self.m1 = m1
-    }
-}
-
-@Buildable
-package struct MyStruct {
-    let m1: String
-    let fix: String = ""
-}
-
-@Buildable
-public struct Person: Sendable {
-    let name: String
-    let age: Int
-    let address: Address
-    let favouriteSeason: Season
-}
-
-@Buildable
-public enum Season: Sendable {
-    case winter
-    case spring
-    case summer
-    case autumn
-}
-
-@Buildable(accessLevel: .private)
-package class AppState {
-    let persons: [Person]
-
-    init(
-        persons: [Person]
-    ) {
-        self.persons = persons
-    }
-}
-
-@Buildable
-public struct Address: Sendable {}
-
-let anyPerson = PersonBuilder().build()
-let max = PersonBuilder(name: "Max", favouriteSeason: .summer).build()
-let appState = AppStateBuilder(persons: [max]).build()
-
-let myObject = MyObjectBuilder().build()

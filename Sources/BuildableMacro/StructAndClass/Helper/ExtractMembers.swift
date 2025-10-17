@@ -36,7 +36,7 @@ private func hasStaticModifier(_ variable: VariableDeclSyntax) -> Bool {
 }
 
 private func hasPrivateModifier(_ variable: VariableDeclSyntax) -> Bool {
-    variable.modifiers.contains(where: { $0.name.text.contains("private") })
+    variable.modifiers.contains(where: { $0.name.text == "private" })
 }
 
 private func isConstant(_ variable: VariableDeclSyntax) -> Bool {
