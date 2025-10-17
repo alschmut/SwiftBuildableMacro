@@ -260,6 +260,7 @@ class BuildableStructTests: XCTestCase {
                 let m1: String?
                 private var m2: String?
                 public var m3: String?
+                fileprivate var m4: String?
             }
             """,
             expandedSource: """
@@ -268,16 +269,19 @@ class BuildableStructTests: XCTestCase {
                 let m1: String?
                 private var m2: String?
                 public var m3: String?
+                fileprivate var m4: String?
             }
 
             struct MyObjectBuilder {
                 var m1: String?
                 var m3: String?
+                var m4: String?
 
                 func build() -> MyObject {
                     return MyObject(
                         m1: m1,
-                        m3: m3
+                        m3: m3,
+                        m4: m4
                     )
                 }
             }

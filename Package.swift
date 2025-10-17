@@ -21,7 +21,8 @@ let package = Package(
             ]
         ),
         .target(name: "Buildable", dependencies: ["BuildableMacro"]),
-        .executableTarget(name: "BuildableClient", dependencies: ["Buildable"]),
+        .target(name: "BuildableClientTestData", dependencies: ["Buildable"]),
+        .executableTarget(name: "BuildableClient", dependencies: ["Buildable", "BuildableClientTestData"]),
         .testTarget(
             name: "BuildableMacroTests",
             dependencies: [
