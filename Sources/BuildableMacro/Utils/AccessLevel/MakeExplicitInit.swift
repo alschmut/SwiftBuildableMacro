@@ -6,6 +6,7 @@
 //
 
 import SwiftSyntax
+import SwiftSyntaxBuilder
 
 func makeExplicitInit(parameters: [InitParameter], accessLevel: AccessLevel) -> InitializerDeclSyntax {
     InitializerDeclSyntax(

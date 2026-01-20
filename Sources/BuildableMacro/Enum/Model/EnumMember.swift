@@ -6,6 +6,7 @@
 //
 
 import SwiftSyntax
+import SwiftSyntaxBuilder
 
 struct EnumMember {
     let identifier: TokenSyntax

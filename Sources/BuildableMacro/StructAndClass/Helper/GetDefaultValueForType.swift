@@ -6,6 +6,7 @@
 //
 
 import SwiftSyntax
+import SwiftSyntaxBuilder
 
 func getDefaultValueForType(_ type: TypeSyntax) -> ExprSyntax? {
     if type.kind == .optionalType {

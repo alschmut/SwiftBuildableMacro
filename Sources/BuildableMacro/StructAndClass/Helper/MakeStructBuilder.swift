@@ -6,6 +6,7 @@
 //
 
 import SwiftSyntax
+import SwiftSyntaxBuilder
 
 func makeStructBuilder(
     structName: TokenSyntax,

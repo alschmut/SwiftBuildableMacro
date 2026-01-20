@@ -32,3 +32,15 @@ let package = Package(
         ),
     ]
 )
+
+// See also `swift -print-supported-features`
+package.targets.forEach {
+    $0.swiftSettings = [
+        .enableUpcomingFeature("ImmutableWeakCaptures"),
+        .enableUpcomingFeature("InferIsolatedConformances"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
+//        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("ExistentialAny"),
+    ]
+}

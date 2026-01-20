@@ -6,6 +6,7 @@
 //
 
 import SwiftSyntax
+import SwiftSyntaxBuilder
 
 func generateBuilderFromEnum(enumDecl: EnumDeclSyntax, accessLevel: AccessLevel?) throws -> StructDeclSyntax {
     let enumMember = EnumMember(

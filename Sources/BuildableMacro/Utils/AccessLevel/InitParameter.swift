@@ -7,6 +7,7 @@
 
 import SwiftSyntax
 import Foundation
+import SwiftSyntaxBuilder
 
 struct InitParameter: Identifiable {
     let id = UUID()

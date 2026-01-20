@@ -6,6 +6,7 @@
 //
 
 import SwiftSyntax
+import SwiftSyntaxBuilder
 
 /// Returns a `DeclModifierListSyntax` for properties and functions inside the generated Builder.
 ///
