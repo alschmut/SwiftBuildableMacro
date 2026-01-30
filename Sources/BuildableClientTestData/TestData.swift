@@ -25,7 +25,6 @@ public struct MyObject {
     let m20: CGPoint
     let m21: CGRect
     let m22: CGSize
-    let m23: CGVector
     let m24: String?
     let m25: String!
     let m26: [String]
@@ -40,6 +39,13 @@ public struct MyObject {
     let m35: (String, Int) -> String
     var myEnum: MyEnum
 }
+
+#if !os(Android)
+@Buildable
+public struct NonAndroidObject {
+    let m23: CGVector
+}
+#endif
 
 @MainActor
 let abc = MyObjectBuilder().build()
